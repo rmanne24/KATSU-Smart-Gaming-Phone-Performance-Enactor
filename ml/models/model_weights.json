@@ -1,0 +1,32 @@
+{
+  "feature_cols": [
+    "ram_gb",
+    "ram_used_percent",
+    "storage_used_percent",
+    "temperature_c",
+    "battery_percent",
+    "app_ram_gb",
+    "app_storage_gb",
+    "app_gpu_intensity",
+    "app_cpu_intensity",
+    "target_fps"
+  ],
+  "feature_importances": {
+    "ram_gb": 0.084,
+    "ram_used_percent": 0.4305,
+    "storage_used_percent": 0.0029,
+    "temperature_c": 0.134,
+    "battery_percent": 0.0037,
+    "app_ram_gb": 0.3305,
+    "app_storage_gb": 0.0006,
+    "app_gpu_intensity": 0.0097,
+    "app_cpu_intensity": 0.004,
+    "target_fps": 0.0
+  },
+  "metrics": {
+    "score_r2": 0.9629,
+    "score_mse": 12.1863,
+    "fps_r2": 0.993
+  },
+  "model_version": "1.0.0-iqoo-snapdragon8elite"
+}
