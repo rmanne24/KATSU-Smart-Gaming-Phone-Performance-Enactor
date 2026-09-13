@@ -1,5 +1,5 @@
 /**
- * NEXUS // AI Phone Performance Enactor (iQOO 13 Flagship Edition)
+ * KATSU // AI Phone Performance Enactor (iQOO 13 Flagship Edition)
  * Mobile-First Multi-Slide Navigation, Real-Time Dual-Mode ML,
  * Telemetry Simulation, and Live Session Stream.
  */
@@ -75,7 +75,7 @@ let games = [
     verdict: 'OPTIMAL',
     title: 'Battle-ready conditions.',
     copy: 'Thermals and memory are both in the ideal range for high frame-rate play.',
-    ai: 'Your current device state is ideal for PUBG Mobile. NEXUS expects stable frame pacing, low heat build-up, and plenty of battery headroom.',
+    ai: 'Your current device state is ideal for PUBG Mobile. KATSU expects stable frame pacing, low heat build-up, and plenty of battery headroom.',
     gain: 3,
   },
   {
@@ -293,7 +293,7 @@ function computeOnDevicePrediction(game, telemetry, isOpt) {
   }
 
   const explanation = isOpt
-    ? `NEXUS has created additional headroom for ${game.name}. Background tasks are cleared and Monster Mode cooling is active, maintaining stable frame pacing for the next hour.`
+    ? `KATSU has created additional headroom for ${game.name}. Background tasks are cleared and Monster Mode cooling is active, maintaining stable frame pacing for the next hour.`
     : `Your iQOO 13 can run ${game.name} ${finalScore >= 85 ? 'exceptionally well' : 'comfortably'} right now. Current device temperature (${effectiveTemp.toFixed(1)}°C) and memory margin indicate ${thermalRisk === 'HIGH' ? 'potential throttling after 25–30 minutes' : 'stable pacing with low thermal resistance'}.`;
 
   return {
@@ -460,7 +460,7 @@ async function renderResult() {
   $('#fpsTrackBar').style.width = `${trackWidth}%`;
 
   $('#optimizeCopy').textContent = optimized
-    ? 'Game Mode is active. NEXUS has cleared 3 background processes and is prioritizing this session.'
+    ? 'Game Mode is active. KATSU has cleared 3 background processes and is prioritizing this session.'
     : `Close 3 background processes and activate Game Mode to gain an estimated ${selected.gain} FPS.`;
   $('#optimizeBtn').textContent = optimized ? '✓ PHONE OPTIMIZED' : 'OPTIMIZE FOR ME →';
 
@@ -606,7 +606,7 @@ $('#explainDone').onclick = () => {
 
 // Audio Speech Synthesis
 $('#speakBtn').onclick = () => {
-  toast('NEXUS AUDIO BRIEFING PLAYING');
+  toast('KATSU AUDIO BRIEFING PLAYING');
   if ('speechSynthesis' in window) {
     speechSynthesis.cancel();
     const utterance = new SpeechSynthesisUtterance($('#aiText').textContent);
@@ -733,12 +733,6 @@ $$('[data-preset]').forEach((btn) => {
       deviceTelemetry.ram_used_percent = 34.0;
       deviceTelemetry.battery_percent = 92.0;
       toast('SIMULATING COOL IDLE (32.0°C)');
-    } else if (p === 'monster') {
-      deviceTelemetry.temperature_c = 36.5;
-      deviceTelemetry.ram_used_percent = 38.0;
-      deviceTelemetry.battery_percent = 85.0;
-      deviceTelemetry.is_optimized = true;
-      toast('SIMULATING iQOO MONSTER MODE ACTIVE');
     }
 
     $('#simTemp').value = deviceTelemetry.temperature_c;
