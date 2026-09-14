@@ -146,6 +146,14 @@ function toast(msg) {
   setTimeout(() => t.classList.remove('show'), 2600);
 }
 
+// Render Lucide SVG icons inside a container (called after any innerHTML change)
+function renderIcons(scope) {
+  if (window.lucide && typeof window.lucide.createIcons === 'function') {
+    window.lucide.createIcons(scope ? { attrs: {}, nameAttr: 'data-lucide' } : undefined);
+  }
+}
+renderIcons();
+
 // Navigation between major views (Dashboard, Analyze, Results, Session, History)
 function show(id) {
   $$('.view').forEach((v) => v.classList.remove('active'));
@@ -339,6 +347,7 @@ function renderGames() {
       updateSelection();
     };
   });
+  renderIcons(grid);
 }
 
 function updateSelection() {
@@ -492,6 +501,8 @@ async function renderResult() {
       rPressure === 'LOW' ? '#b8ff58' : '#ffb25b'
     ) +
     risk('NETWORK COST', '1.3 GB / HR', 'Wi‑Fi recommended.', '#ffb25b');
+
+  renderIcons($('#risks'));
 
   $('#featThermalVal').textContent = `${deviceTelemetry.temperature_c > 40 ? '−34.0%' : '−26.0%'}`;
   $('#featThermalDesc').textContent = `Device temp is ${deviceTelemetry.temperature_c.toFixed(1)}°C (throttle begins at 41.5°C).`;
@@ -699,16 +710,64 @@ $('#applyCustomGame').onclick = () => {
   toast(`CUSTOM PROFILE CONFIGURED: ${name}`);
 };
 
-// Telemetry Simulator & Sliders
+// Telemetry Lab: readout chips, mode badge & sliders
+function classifyThermalState(tempC) {
+  if (tempC >= 42.5) return { label: 'CRITICAL', cls: 'crit' };
+  if (tempC >= 40.5) return { label: 'ELEVATED', cls: 'warm' };
+  if (tempC <= 34) return { label: 'COOL', cls: 'cool' };
+  return { label: 'NOMINAL', cls: 'nominal' };
+}
+
+function updateSimReadout() {
+  const temp = deviceTelemetry.temperature_c;
+  const ram = Math.round(deviceTelemetry.ram_used_percent);
+  const batt = Math.round(deviceTelemetry.battery_percent);
+
+  $('#readoutTemp').textContent = `${temp.toFixed(1)}°C`;
+  $('#readoutRam').textContent = `${ram}%`;
+  $('#readoutBatt').textContent = `${batt}%`;
+
+  const badge = $('#simModeBadge');
+  if (badge) {
+    const state = classifyThermalState(temp);
+    badge.textContent = state.label;
+    badge.className = `sim-mode-badge ${state.cls}`;
+  }
+}
+
+function syncSimSliders() {
+  $('#simTemp').value = deviceTelemetry.temperature_c;
+  $('#simRam').value = Math.round(deviceTelemetry.ram_used_percent);
+  $('#simBatt').value = Math.round(deviceTelemetry.battery_percent);
+  $('#simTempLabel').textContent = `${deviceTelemetry.temperature_c.toFixed(1)}°C`;
+  $('#simRamLabel').textContent = `${Math.round(deviceTelemetry.ram_used_percent)}%`;
+  $('#simBattLabel').textContent = `${Math.round(deviceTelemetry.battery_percent)}%`;
+}
+
 $('#simToggle').onclick = () => {
   show('dashboard');
   switchSubSlide('dash-slide-2');
-  toast('TELEMETRY SIMULATOR OPENED (SLIDE 2)');
+  toast('TELEMETRY LAB OPENED (SLIDE 2)');
 };
 
 $('#simTemp').oninput = (e) => {
   deviceTelemetry.temperature_c = parseFloat(e.target.value);
-  $('#simTempLabel').textContent = `${deviceTelemetry.temperature_c.toFixed(1)}°C`;
+  syncSimSliders();
+  updateSimReadout();
+  updateDashboardMetrics();
+};
+
+$('#simRam').oninput = (e) => {
+  deviceTelemetry.ram_used_percent = parseFloat(e.target.value);
+  syncSimSliders();
+  updateSimReadout();
+  updateDashboardMetrics();
+};
+
+$('#simBatt').oninput = (e) => {
+  deviceTelemetry.battery_percent = parseFloat(e.target.value);
+  syncSimSliders();
+  updateSimReadout();
   updateDashboardMetrics();
 };
 
@@ -723,6 +782,7 @@ $$('[data-preset]').forEach((btn) => {
       deviceTelemetry.temperature_c = 39.0;
       deviceTelemetry.ram_used_percent = 47.0;
       deviceTelemetry.battery_percent = 78.0;
+      toast('NOMINAL STATE · 39.0°C · READY TO PLAY');
     } else if (p === 'hot') {
       deviceTelemetry.temperature_c = 43.5;
       deviceTelemetry.ram_used_percent = 84.0;
@@ -735,9 +795,12 @@ $$('[data-preset]').forEach((btn) => {
       toast('SIMULATING COOL IDLE (32.0°C)');
     }
 
-    $('#simTemp').value = deviceTelemetry.temperature_c;
-    $('#simTempLabel').textContent = `${deviceTelemetry.temperature_c.toFixed(1)}°C`;
-
+    syncSimSliders();
+    updateSimReadout();
     updateDashboardMetrics();
   };
 });
+
+// Initialize telemetry lab readout + sliders on load
+syncSimSliders();
+updateSimReadout();

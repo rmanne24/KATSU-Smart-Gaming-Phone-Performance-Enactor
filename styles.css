@@ -235,6 +235,40 @@ body {
   border-color: var(--lime);
   transform: rotate(45deg);
 }
+.avatar svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* Lucide Icon Sizing & Color Inheritance */
+.status-right .status-icon svg,
+.charging svg {
+  width: 10px;
+  height: 10px;
+  vertical-align: -1px;
+}
+.status-right .status-icon {
+  display: inline-flex;
+  align-items: center;
+}
+.charging {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+}
+.intel-icon svg {
+  width: 16px;
+  height: 16px;
+}
+.spark svg {
+  width: 13px;
+  height: 13px;
+  vertical-align: -2px;
+}
+.modal-close svg {
+  width: 16px;
+  height: 16px;
+}
 
 /* Phone Screen Viewport (Sized strictly for iQOO 13) */
 .phone-screen-viewport {
@@ -560,22 +594,170 @@ body {
   margin: 0;
 }
 
-/* Sim Card on Slide 2 */
+/* Telemetry Lab — structured simulator */
 .sim-card {
-  padding: 12px 14px;
+  padding: 14px;
 }
+.sim-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+}
+.sim-head-title {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.sim-head-title small {
+  display: block;
+  font-size: 9px;
+  color: var(--muted);
+  margin-top: 1px;
+}
+.sim-head-icon {
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  border-radius: 6px;
+  background: rgba(184, 255, 88, 0.1);
+  border: 1px solid rgba(184, 255, 88, 0.25);
+}
+.sim-head-icon svg {
+  width: 14px;
+  height: 14px;
+  color: var(--lime);
+}
+.sim-mode-badge {
+  font: 8px 'DM Mono', monospace;
+  letter-spacing: 0.8px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  border: 1px solid;
+  white-space: nowrap;
+}
+.sim-mode-badge.nominal { color: var(--lime); border-color: rgba(184, 255, 88, 0.4); background: rgba(184, 255, 88, 0.08); }
+.sim-mode-badge.cool { color: #7fd8ff; border-color: rgba(127, 216, 255, 0.4); background: rgba(127, 216, 255, 0.08); }
+.sim-mode-badge.warm { color: var(--orange); border-color: rgba(255, 178, 91, 0.4); background: rgba(255, 178, 91, 0.08); }
+.sim-mode-badge.crit { color: var(--danger); border-color: rgba(255, 94, 91, 0.45); background: rgba(255, 94, 91, 0.1); animation: blink 1.6s infinite; }
+
+.sim-readout {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  margin-top: 10px;
+}
+.sim-readout-item {
+  background: #0a1322;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 6px 8px;
+}
+.sim-readout-item span {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font: 7.5px 'DM Mono', monospace;
+  letter-spacing: 0.5px;
+  color: #8191a9;
+}
+.sim-readout-item span svg {
+  width: 10px;
+  height: 10px;
+}
+.sim-readout-item b {
+  display: block;
+  font-size: 13px;
+  margin-top: 2px;
+}
+
 .sim-presets {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 5px;
-  margin: 8px 0;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  margin: 10px 0;
+}
+.sim-preset-btn {
+  background: #0a1322;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 8px 6px;
+  color: #cbd8ec;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  cursor: pointer;
+  transition: 0.15s;
+}
+.sim-preset-btn svg {
+  width: 14px;
+  height: 14px;
+  color: #8fa3c0;
+  transition: 0.15s;
+}
+.sim-preset-btn span {
+  font-size: 9.5px;
+  font-weight: 600;
+}
+.sim-preset-btn small {
+  font: 7px 'DM Mono', monospace;
+  color: var(--muted);
+}
+.sim-preset-btn:hover {
+  border-color: rgba(184, 255, 88, 0.35);
+  transform: translateY(-1px);
+}
+.sim-preset-btn.active {
+  border-color: var(--lime);
+  background: rgba(184, 255, 88, 0.08);
+  box-shadow: 0 0 10px rgba(184, 255, 88, 0.15);
+}
+.sim-preset-btn.active svg {
+  color: var(--lime);
+}
+.sim-preset-btn.warn.active {
+  border-color: var(--orange);
+  background: rgba(255, 178, 91, 0.08);
+  box-shadow: 0 0 10px rgba(255, 178, 91, 0.15);
+}
+.sim-preset-btn.warn.active svg {
+  color: var(--orange);
+}
+.sim-preset-btn.cool.active {
+  border-color: #7fd8ff;
+  background: rgba(127, 216, 255, 0.08);
+  box-shadow: 0 0 10px rgba(127, 216, 255, 0.15);
+}
+.sim-preset-btn.cool.active svg {
+  color: #7fd8ff;
+}
+
+.sim-controllers {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border-top: 1px solid var(--line);
+  padding-top: 10px;
 }
 .sim-slider-compact label {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   font: 8.5px 'DM Mono', monospace;
   color: #9cb0ce;
-  margin-bottom: 3px;
+  margin-bottom: 4px;
+}
+.sim-slider-compact label span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.sim-slider-compact label span svg {
+  width: 10px;
+  height: 10px;
+  color: #8fa3c0;
 }
 .sim-slider-compact label b {
   color: var(--lime);
@@ -584,6 +766,7 @@ body {
   width: 100%;
   accent-color: var(--lime);
   cursor: pointer;
+  height: 3px;
 }
 
 /* Game Grid (Catalog) */
@@ -1114,6 +1297,11 @@ body {
 .dock-icon {
   font-size: 15px;
   line-height: 1;
+}
+.dock-icon svg {
+  width: 17px;
+  height: 17px;
+  display: block;
 }
 .dock-label {
   font: 7.5px 'DM Mono', monospace;

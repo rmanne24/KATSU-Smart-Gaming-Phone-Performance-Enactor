@@ -4,11 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta name="theme-color" content="#07101f" />
-    <title>KATSU // Performance Intelligence (iQOO 13)</title>
+    <title>KATSU · Performance Intelligence (iQOO 13)</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="styles.css" />
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
   </head>
   <body>
     <div class="noise"></div>
@@ -31,7 +32,7 @@
           </div>
           <div class="status-right">
             <span class="status-icon">5G</span>
-            <span class="status-icon">ᯤ</span>
+            <span class="status-icon"><i data-lucide="wifi"></i></span>
             <span class="status-battery" id="statusBattery">78%</span>
           </div>
         </div>
@@ -40,10 +41,10 @@
         <header class="phone-nav">
           <a class="brand" href="#" data-go="dashboard">
             <span class="brand-mark">K</span>
-            <span>KATSU <i>//</i></span>
+            <span>KATSU</span>
           </a>
           
-          <button class="avatar" id="simToggle" aria-label="Device Simulator" title="Telemetry Simulator">⚙</button>
+          <button class="avatar" id="simToggle" aria-label="Telemetry Lab" title="Telemetry Lab"><i data-lucide="settings"></i></button>
         </header>
 
         <!-- Main Slide Viewport (Fits exactly inside iQOO 13 phone dimensions) -->
@@ -98,7 +99,7 @@
                 <div class="battery-row">
                   <span>BATTERY <b id="batteryText">78%</b></span>
                   <span id="tempText">39.0°C <i class="temp-ok"></i></span>
-                  <span class="charging" id="chargingStatus">⚡ CHARGING</span>
+                  <span class="charging" id="chargingStatus"><i data-lucide="zap"></i> CHARGING</span>
                 </div>
               </article>
 
@@ -118,7 +119,7 @@
 
               <div class="intel-grid">
                 <article class="intel card">
-                  <div class="intel-icon lime">◌</div>
+                  <div class="intel-icon lime"><i data-lucide="timer"></i></div>
                   <div>
                     <span>BATTERY WINDOW</span>
                     <h3 id="intelPlaytime">2h 14m of playtime</h3>
@@ -126,7 +127,7 @@
                   </div>
                 </article>
                 <article class="intel card">
-                  <div class="intel-icon orange">⌁</div>
+                  <div class="intel-icon orange"><i data-lucide="thermometer"></i></div>
                   <div>
                     <span>THERMAL FORECAST</span>
                     <h3 id="intelThermal">Stable for 42 mins</h3>
@@ -134,7 +135,7 @@
                   </div>
                 </article>
                 <article class="intel card">
-                  <div class="intel-icon violet">↯</div>
+                  <div class="intel-icon violet"><i data-lucide="signal"></i></div>
                   <div>
                     <span>NETWORK COST</span>
                     <h3>1.3 GB / hour</h3>
@@ -143,23 +144,70 @@
                 </article>
               </div>
 
-              <!-- Inline Telemetry Simulator on Slide 2 -->
+              <!-- Telemetry Lab (structured simulator) on Slide 2 -->
               <article class="card sim-card">
-                <div class="card-label">TELEMETRY SIMULATOR <span>TEST STATES</span></div>
-                <div class="sim-presets">
-                  <button class="chip-btn active" data-preset="nominal">NOMINAL 39°C</button>
-                  <button class="chip-btn" data-preset="hot">THROTTLE 43.5°C</button>
-                  <button class="chip-btn" data-preset="cool">COOL 32°C</button>
-                  
+                <div class="sim-head">
+                  <div class="sim-head-title">
+                    <span class="sim-head-icon"><i data-lucide="activity"></i></span>
+                    <div>
+                      <div class="card-label">TELEMETRY LAB</div>
+                      <small>Synthesize device states for demo &amp; testing</small>
+                    </div>
+                  </div>
+                  <span class="sim-mode-badge" id="simModeBadge">NOMINAL</span>
                 </div>
-                <div class="sim-slider-compact">
-                  <label>DEVICE TEMP: <b id="simTempLabel">39.0°C</b></label>
-                  <input type="range" id="simTemp" min="28" max="46" step="0.5" value="39" />
+
+                <div class="sim-readout">
+                  <div class="sim-readout-item">
+                    <span><i data-lucide="thermometer"></i> TEMP</span>
+                    <b id="readoutTemp">39.0°C</b>
+                  </div>
+                  <div class="sim-readout-item">
+                    <span><i data-lucide="memory-stick"></i> RAM</span>
+                    <b id="readoutRam">47%</b>
+                  </div>
+                  <div class="sim-readout-item">
+                    <span><i data-lucide="battery-charging"></i> BATT</span>
+                    <b id="readoutBatt">78%</b>
+                  </div>
+                </div>
+
+                <div class="sim-presets">
+                  <button class="sim-preset-btn active" data-preset="nominal">
+                    <i data-lucide="circle-check"></i>
+                    <span>Nominal</span>
+                    <small>39°C · Ready</small>
+                  </button>
+                  <button class="sim-preset-btn warn" data-preset="hot">
+                    <i data-lucide="flame"></i>
+                    <span>Throttle</span>
+                    <small>43.5°C · Hot</small>
+                  </button>
+                  <button class="sim-preset-btn cool" data-preset="cool">
+                    <i data-lucide="snowflake"></i>
+                    <span>Cool</span>
+                    <small>32°C · Idle</small>
+                  </button>
+                </div>
+
+                <div class="sim-controllers">
+                  <div class="sim-slider-compact">
+                    <label><span><i data-lucide="thermometer"></i> DEVICE TEMP</span> <b id="simTempLabel">39.0°C</b></label>
+                    <input type="range" id="simTemp" min="28" max="46" step="0.5" value="39" />
+                  </div>
+                  <div class="sim-slider-compact">
+                    <label><span><i data-lucide="memory-stick"></i> MEMORY LOAD</span> <b id="simRamLabel">47%</b></label>
+                    <input type="range" id="simRam" min="20" max="95" step="1" value="47" />
+                  </div>
+                  <div class="sim-slider-compact">
+                    <label><span><i data-lucide="battery-charging"></i> BATTERY</span> <b id="simBattLabel">78%</b></label>
+                    <input type="range" id="simBatt" min="1" max="100" step="1" value="78" />
+                  </div>
                 </div>
               </article>
 
               <div class="slide-action-row">
-                <button class="primary" data-go="history">VIEW 30-DAY WEAR <b>→</b></button>
+                <button class="primary" data-go="history">VIEW 30-DAY INSIGHTS <b>→</b></button>
               </div>
             </div>
           </section>
@@ -287,11 +335,11 @@
               <div class="risks" id="risks"></div>
 
               <article class="ai-card card">
-                <div class="ai-title"><span class="spark">✦</span> KATSU AI <small>EXPLAINED</small></div>
+                <div class="ai-title"><span class="spark"><i data-lucide="sparkles"></i></span> KATSU AI <small>EXPLAINED</small></div>
                 <p id="aiText">Your iQOO 13 can run Genshin Impact comfortably right now. Memory headroom is healthy, but the current 39°C device temperature means sustained high settings could cause a small FPS dip after 40 minutes.</p>
                 <div class="ai-actions">
-                  <button class="text-btn" id="whyBtn">WHY THIS RESULT? ⚙</button>
-                  <button class="chip-btn" id="speakBtn">⌁ PLAY AUDIO</button>
+                  <button class="text-btn" id="whyBtn">WHY THIS RESULT?</button>
+                  <button class="chip-btn" id="speakBtn">PLAY AUDIO</button>
                 </div>
               </article>
 
@@ -363,8 +411,8 @@
           <section id="history" class="view">
             <!-- Slide Switcher Option -->
             <div class="slide-nav-bar">
-              <button class="slide-pill active" data-slide-btn="hist-slide-1">1. 30-DAY RETENTION</button>
-              <button class="slide-pill" data-slide-btn="hist-slide-2">2. PER-APP WEAR &amp; TIPS</button>
+              <button class="slide-pill active" data-slide-btn="hist-slide-1">1. HEALTH RETENTION</button>
+              <button class="slide-pill" data-slide-btn="hist-slide-2">2. PER-APP IMPACT</button>
             </div>
 
             <!-- Slide 1: 30-Day Battery Health Trend -->
@@ -417,8 +465,8 @@
             <!-- Slide 2: Per-App Degradation Breakdown & AI Tips -->
             <div id="hist-slide-2" class="sub-slide">
               <div class="hero-compact">
-                <div class="eyebrow">TITLE BREAKDOWN <span>BATTERY WEAR</span></div>
-                <h2>Wear by Application</h2>
+                <div class="eyebrow">TITLE BREAKDOWN <span>BATTERY IMPACT</span></div>
+                <h2>Impact by Application</h2>
               </div>
 
               <div class="degrade-list">
@@ -429,7 +477,7 @@
                       <h3>Genshin Impact</h3>
                       <p>18.2 hrs · 42.4°C avg peak</p>
                     </div>
-                    <span class="wear-badge danger">−4.0% WEAR</span>
+                    <span class="wear-badge danger">−4.0% IMPACT</span>
                   </div>
                   <div class="wear-bar"><i style="width: 68%; background:#6257ff"></i></div>
                 </article>
@@ -441,7 +489,7 @@
                       <h3>Honkai: Star Rail</h3>
                       <p>12.0 hrs · 40.1°C avg peak</p>
                     </div>
-                    <span class="wear-badge warning">−2.1% WEAR</span>
+                    <span class="wear-badge warning">−2.1% IMPACT</span>
                   </div>
                   <div class="wear-bar"><i style="width: 28%; background:#ed60b2"></i></div>
                 </article>
@@ -453,14 +501,14 @@
                       <h3>Call of Duty: Mobile</h3>
                       <p>9.4 hrs · 38.2°C avg peak</p>
                     </div>
-                    <span class="wear-badge safe">−1.5% WEAR</span>
+                    <span class="wear-badge safe">−1.5% IMPACT</span>
                   </div>
                   <div class="wear-bar"><i style="width: 18%; background:#ff783d"></i></div>
                 </article>
               </div>
 
               <article class="card weekly-digest">
-                <div class="ai-title"><span class="spark">✦</span> WEEKLY AI DIGEST</div>
+                <div class="ai-title"><span class="spark"><i data-lucide="sparkles"></i></span> WEEKLY AI DIGEST</div>
                 <p><strong>Genshin Impact has accounted for 68% of deep-thermal stress.</strong> Fast-charging while gaming adds +3.4°C cell heat. Using bypass charging preserves ~1.2% battery life per month.</p>
               </article>
 
@@ -475,20 +523,20 @@
         <!-- Persistent Bottom Navigation Dock (iQOO OriginOS / Gaming Phone Dock) -->
         <nav class="phone-dock">
           <button class="dock-item active" data-nav="dashboard" title="Dashboard">
-            <span class="dock-icon">⊞</span>
+            <span class="dock-icon"><i data-lucide="layout-dashboard"></i></span>
             <span class="dock-label">OVERVIEW</span>
           </button>
           <button class="dock-item" data-nav="analyze" title="Predictor">
-            <span class="dock-icon">✨</span>
+            <span class="dock-icon"><i data-lucide="sparkles"></i></span>
             <span class="dock-label">PREDICT</span>
           </button>
           <button class="dock-item" data-nav="session" title="Game Mode">
-            <span class="dock-icon">🕹️</span>
+            <span class="dock-icon"><i data-lucide="gamepad-2"></i></span>
             <span class="dock-label">SESSION</span>
           </button>
           <button class="dock-item" data-nav="history" title="Degradation">
-            <span class="dock-icon">📊</span>
-            <span class="dock-label">WEAR</span>
+            <span class="dock-icon"><i data-lucide="chart-line"></i></span>
+            <span class="dock-label">INSIGHTS</span>
           </button>
         </nav>
 
@@ -500,7 +548,7 @@
                 <div class="eyebrow">ML EXPLAINABILITY ENGINE</div>
                 <h2>Why This Result?</h2>
               </div>
-              <button class="modal-close" id="explainClose">✕</button>
+              <button class="modal-close" id="explainClose"><i data-lucide="x"></i></button>
             </div>
             <p class="modal-sub">Mathematical feature importance evaluated by scikit-learn GradientBoosting:</p>
 
