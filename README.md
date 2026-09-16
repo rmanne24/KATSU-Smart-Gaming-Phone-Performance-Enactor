@@ -6,12 +6,22 @@
 
 ## Problem Statement
 
-Modern flagship gaming smartphones pack desktop-grade silicon, high-refresh-rate displays, and advanced vapor chambers. However, mobile gaming performance remains **unpredictable and reactive**:
+Today’s gaming smartphones are powerful, but they still don’t know when they are about to struggle.
 
-* **Blind Workload Launching**: Users launch demanding AAA titles (e.g., *Genshin Impact*, *Honkai: Star Rail*, *Call of Duty: Mobile*) without knowing whether their phone's current thermal state, memory saturation, or battery level can sustain stable gameplay.
-* **Aggressive Thermal Throttling**: Extended gameplay causes surface and SoC temperatures to climb above throttle thresholds (41.5°C+), causing sudden FPS drops, stuttering, and ruined competitive sessions.
-* **Accelerated Battery Degradation**: High thermal stress combined with fast charging accelerates long-term lithium-ion capacity loss, yet users receive no visibility into which titles contribute most to hardware wear.
-* **Reactive, Non-Actionable Tools**: Built-in system monitors only show raw, reactive numbers (e.g., CPU %, current °C) rather than predictive guidance on session stability *before* a game is launched.
+Gamers can launch demanding games like Genshin Impact or Honkai: Star Rail without knowing whether their phone is ready for a long, stable session.
+
+As the gaming session continues:
+
+- Heat builds up, causing the phone to throttle and FPS to suddenly drop.
+- Gameplay becomes unstable, leading to lag, stuttering, and a poor competitive experience.
+- High temperatures and fast charging increase battery stress, but users have no idea which games or usage patterns are contributing to long-term battery wear.
+- Existing phone monitors mostly show what is happening right now—CPU usage, temperature, battery level, etc.—instead of telling users what is likely to happen next.
+  
+**The Core Problem**:
+
+Gaming smartphones are powerful enough to handle demanding games, but users have no intelligent way to know how long their phone can sustain that performance before overheating, throttling, or draining the battery.
+
+What if your phone could predict the problem before it happened—and tell you what to do about it?
 
 ---
 
