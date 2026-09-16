@@ -15,13 +15,13 @@ As the gaming session continues:
 - Heat builds up, causing the phone to throttle and FPS to suddenly drop.
 - Gameplay becomes unstable, leading to lag, stuttering, and a poor competitive experience.
 - High temperatures and fast charging increase battery stress, but users have no idea which games or usage patterns are contributing to long-term battery wear.
-- Existing phone monitors mostly show what is happening right now—CPU usage, temperature, battery level, etc.—instead of telling users what is likely to happen next.
+- Existing phone monitors mostly show what is happening right now: CPU usage, temperature, battery level, etc., instead of telling users what is likely to happen next.
   
 **The Core Problem**:
 
 Gaming smartphones are powerful enough to handle demanding games, but users have no intelligent way to know how long their phone can sustain that performance before overheating, throttling, or draining the battery.
 
-What if your phone could predict the problem before it happened—and tell you what to do about it?
+What if your phone could predict the problem before it happened and tell you what to do about it?
 
 ---
 
