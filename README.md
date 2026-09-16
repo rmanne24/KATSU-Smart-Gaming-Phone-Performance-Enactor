@@ -1,4 +1,4 @@
-# NEXUS // AI Phone Performance Enactor (iQOO 13 Edition)
+# KATSU - AI Phone Performance Enactor (iQOO 13 Edition)
 
 > An AI-powered predictive performance intelligence layer for modern smartphones, calibrated for the **iQOO 13 (Snapdragon® 8 Elite)**.
 
