@@ -175,6 +175,7 @@ node serve.js
 Open your browser and navigate to:
 👉 **`http://localhost:3000`**
 
+---
 
 ## **PROTOTYPE IMAGES**
 
