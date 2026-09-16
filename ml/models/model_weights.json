@@ -25,7 +25,7 @@
   },
   "metrics": {
     "score_r2": 0.9629,
-    "score_mse": 12.1863,
+    "score_mse": 12.1847,
     "fps_r2": 0.993
   },
   "model_version": "1.0.0-iqoo-snapdragon8elite"

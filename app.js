@@ -130,6 +130,7 @@ const deviceTelemetry = {
 let selected = games[0];
 let optimized = false;
 let sessionTimer = null;
+let isSessionActive = false;
 let liveFpsHistory = [54, 56, 55, 58, 57, 59, 58, 60, 58, 59, 57, 58];
 let backendAvailable = false;
 const BACKEND_URL = 'http://127.0.0.1:8000';
@@ -138,12 +139,33 @@ const BACKEND_URL = 'http://127.0.0.1:8000';
 const $ = (s) => document.querySelector(s);
 const $$ = (s) => document.querySelectorAll(s);
 
+let toastTimer = null;
 function toast(msg) {
   const t = $('#toast');
   if (!t) return;
+  if (toastTimer) {
+    clearTimeout(toastTimer);
+    toastTimer = null;
+  }
   t.textContent = msg;
   t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2600);
+  toastTimer = setTimeout(() => {
+    t.classList.remove('show');
+    toastTimer = null;
+  }, 2600);
+}
+
+function updateSessionDisplay() {
+  const idle = $('#sessionIdleState');
+  const active = $('#sessionActiveState');
+  if (!idle || !active) return;
+  if (isSessionActive) {
+    idle.style.display = 'none';
+    active.style.display = 'block';
+  } else {
+    idle.style.display = 'flex';
+    active.style.display = 'none';
+  }
 }
 
 // Render Lucide SVG icons inside a container (called after any innerHTML change)
@@ -168,6 +190,10 @@ function show(id) {
   $$('.dock-item').forEach((item) => {
     item.classList.toggle('active', item.dataset.nav === id);
   });
+
+  if (id === 'session') {
+    updateSessionDisplay();
+  }
 }
 
 // Multi-slide switching inside views
@@ -220,19 +246,21 @@ async function checkBackend() {
       backendAvailable = true;
       const el = $('#backendStatus');
       if (el) {
-        el.innerHTML = '<span class="pulse-dot"></span> ML ACTIVE';
+        el.classList.remove('inactive');
+        el.innerHTML = '<span class="pulse-dot"></span> ACTIVE';
         el.title = `Trained model loaded: ${data.model_type} (R²: ${data.metrics?.score_r2 || 0.96})`;
       }
       return;
     }
   } catch (e) {
-    // Offline / On-device ML mode
+    // Offline mode
   }
   backendAvailable = false;
   const el = $('#backendStatus');
   if (el) {
-    el.innerHTML = '<span class="pulse-dot"></span> ON-DEVICE ML';
-    el.title = 'Running on-device calibrated GradientBoosting inference engine';
+    el.classList.add('inactive');
+    el.innerHTML = '<span class="pulse-dot" style="background:var(--danger);box-shadow:0 0 8px var(--danger)"></span> INACTIVE';
+    el.title = 'Backend unavailable. Operating in fallback on-device mode.';
   }
 }
 checkBackend();
@@ -373,7 +401,8 @@ function updateDashboardMetrics() {
   $('#ramBar').style.width = `${deviceTelemetry.ram_used_percent}%`;
 
   $('#batteryText').textContent = `${Math.round(deviceTelemetry.battery_percent)}%`;
-  $('#statusBattery').textContent = `${Math.round(deviceTelemetry.battery_percent)}%`;
+  const statusBat = $('#statusBattery');
+  if (statusBat) statusBat.textContent = `${Math.round(deviceTelemetry.battery_percent)}%`;
   $('#tempText').innerHTML = `${deviceTelemetry.temperature_c.toFixed(1)}°C <i class="temp-ok" style="background:${deviceTelemetry.temperature_c > 41 ? '#ff5e5b' : '#b8ff58'}"></i>`;
 
   let readiness = 98 - (deviceTelemetry.temperature_c - 30) * 2.2 - (deviceTelemetry.ram_used_percent - 30) * 0.45;
@@ -457,13 +486,13 @@ async function renderResult() {
     predictionData = computeOnDevicePrediction(selected, deviceTelemetry, optimized);
   }
 
-  const s = predictionData.performance_score;
+  const s = predictionData.performance_score ?? predictionData.score ?? 80;
   $('#performanceScore').textContent = s;
-  $('#verdictLabel').textContent = predictionData.verdict_label;
-  $('#verdictTitle').textContent = predictionData.verdict_title;
-  $('#verdictCopy').textContent = predictionData.verdict_copy;
-  $('#aiText').textContent = predictionData.ai_explanation;
-  $('#fpsText').textContent = predictionData.fps_range;
+  $('#verdictLabel').textContent = predictionData.verdict_label ?? predictionData.verdict ?? 'PLAYABLE';
+  $('#verdictTitle').textContent = predictionData.verdict_title ?? predictionData.title ?? '';
+  $('#verdictCopy').textContent = predictionData.verdict_copy ?? predictionData.copy ?? '';
+  $('#aiText').textContent = predictionData.ai_explanation ?? predictionData.ai_rationale ?? '';
+  $('#fpsText').textContent = predictionData.fps_range ?? predictionData.estimatedFrameRate ?? `${Math.max(30, Math.round(s * 0.65))}–${Math.round(s * 0.75)} FPS`;
 
   const trackWidth = Math.min(100, Math.max(30, s));
   $('#fpsTrackBar').style.width = `${trackWidth}%`;
@@ -552,6 +581,15 @@ renderGames();
 updateSelection();
 updateDashboardMetrics();
 setupSlideButtons();
+updateSessionDisplay();
+
+const startBtn = $('#startNewSessionBtn');
+if (startBtn) {
+  startBtn.onclick = () => {
+    show('analyze');
+    switchSubSlide('analyze-slide-1');
+  };
+}
 
 // Wire Bottom Dock Navigation Items
 $$('[data-nav]').forEach((btn) => {
@@ -629,6 +667,8 @@ $('#speakBtn').onclick = () => {
 
 // Launch Game / Live Session
 $('#launchBtn').onclick = () => {
+  isSessionActive = true;
+  updateSessionDisplay();
   show('session');
   $('#sessionGame').textContent = selected.name;
 
@@ -656,7 +696,8 @@ $('#launchBtn').onclick = () => {
       sessionBat = Math.max(1, sessionBat - 1);
       deviceTelemetry.battery_percent = sessionBat;
       $('#sessionBattery').textContent = `${sessionBat}%`;
-      $('#statusBattery').textContent = `${sessionBat}%`;
+      const statusBat = $('#statusBattery');
+      if (statusBat) statusBat.textContent = `${sessionBat}%`;
     }
 
     $('#liveFps').textContent = currentFps;
@@ -671,7 +712,10 @@ $('#launchBtn').onclick = () => {
 
 // End Session
 $('#endSession').onclick = () => {
+  isSessionActive = false;
   clearInterval(sessionTimer);
+  sessionTimer = null;
+  updateSessionDisplay();
   toast('SESSION LOGGED TO 30-DAY DEGRADATION HISTORY');
   show('dashboard');
   switchSubSlide('dash-slide-1');
