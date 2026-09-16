@@ -177,6 +177,10 @@ Open your browser and navigate to:
 
 
 ###PROTOTYPE IMAGES
+
+
+
+
 <img width="444" height="686" alt="image" src="https://github.com/user-attachments/assets/1d5e558e-83b0-4ba0-aac9-82874c05c218" />
 
 <img width="433" height="683" alt="image" src="https://github.com/user-attachments/assets/04280710-dfbb-4ff2-b172-427b2e6a5d88" />
