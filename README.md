@@ -1,4 +1,4 @@
-# KATSU — AI Phone Performance Enactor (iQOO 13 Flagship Edition)
+# KATSU — AI Phone Performance Enactor (Caters to iQOO 13 phone)
 
 > An AI-powered predictive performance intelligence system calibrated for modern high-performance smartphones and the **iQOO 13 (Snapdragon® 8 Elite)**.
 
