@@ -174,3 +174,23 @@ node serve.js
 ```
 Open your browser and navigate to:
 👉 **`http://localhost:3000`**
+
+
+###PROTOTYPE IMAGES
+<img width="444" height="686" alt="image" src="https://github.com/user-attachments/assets/1d5e558e-83b0-4ba0-aac9-82874c05c218" />
+
+<img width="433" height="683" alt="image" src="https://github.com/user-attachments/assets/04280710-dfbb-4ff2-b172-427b2e6a5d88" />
+
+<img width="444" height="684" alt="image" src="https://github.com/user-attachments/assets/9169d8b4-6f0f-48f2-b691-6c10501a2855" />
+
+<img width="430" height="682" alt="image" src="https://github.com/user-attachments/assets/14c319cd-0e3f-4bcd-8ff8-3367db3c45b9" />
+
+<img width="437" height="684" alt="image" src="https://github.com/user-attachments/assets/7152fcd8-49d7-4313-9677-d2cc8b0253ae" />
+
+<img width="448" height="682" alt="image" src="https://github.com/user-attachments/assets/ab2c9010-fb34-433c-9dec-fc33c13f6756" />
+
+<img width="442" height="684" alt="image" src="https://github.com/user-attachments/assets/25b6d6c4-5d97-4fb7-bd85-b1f915f0c527" />
+
+<img width="446" height="685" alt="image" src="https://github.com/user-attachments/assets/6336fef1-3c1a-4200-8660-43b6027b6195" />
+
+<img width="446" height="684" alt="image" src="https://github.com/user-attachments/assets/f46e71db-0772-469a-8e5c-640e1466194b" />
