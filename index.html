@@ -15,35 +15,20 @@
     <div class="orb orb-a"></div>
     <div class="orb orb-b"></div>
 
-    <!-- Authentic iQOO 13 Chassis Container -->
-    <div class="phone-frame-wrapper">
-      <div class="phone-frame">
-        <!-- Hardware Top Bezel & Camera Punch-hole -->
-        <div class="phone-hardware-top">
-          <div class="speaker-grill"></div>
-          <div class="camera-punch"></div>
-        </div>
-
-        <!-- Android Status Bar -->
-        <div class="status-bar">
-          <div class="status-left"><span id="clockDisplay">12:45</span></div>
-          <div class="status-center">
-          </div>
-          <div class="status-right">
-            <span class="status-icon">5G</span>
-            <span class="status-icon">ᯤ</span>
-            <span class="status-battery" id="statusBattery">78%</span>
-          </div>
-        </div>
-
+    <!-- Main Web Application Container -->
+    <div class="phone-frame-wrapper app-wrapper">
+      <div class="phone-frame app-frame">
         <!-- Top Header Navigation -->
-        <header class="phone-nav">
+        <header class="phone-nav app-nav">
           <a class="brand" href="#" data-go="dashboard">
             <span class="brand-mark">K</span>
-            <span>KATSU <i>//</i></span>
+            <span>KATSU</span>
           </a>
           
-          <button class="avatar" id="simToggle" aria-label="Device Simulator" title="Telemetry Simulator">⚙</button>
+          <div class="header-right">
+            <span id="backendStatus" class="backend-pill"><span class="pulse-dot"></span> ACTIVE</span>
+            <button class="avatar" id="simToggle" aria-label="Device Simulator" title="Telemetry Simulator">⚙</button>
+          </div>
         </header>
 
         <!-- Main Slide Viewport (Fits exactly inside iQOO 13 phone dimensions) -->
@@ -53,14 +38,14 @@
           <section id="dashboard" class="view active">
             <!-- Slide Switcher Option -->
             <div class="slide-nav-bar">
-              <button class="slide-pill active" data-slide-btn="dash-slide-1">1. READINESS &amp; DEVICE</button>
-              <button class="slide-pill" data-slide-btn="dash-slide-2">2. LIVE INTEL &amp; SIM</button>
+              <button class="slide-pill active" data-slide-btn="dash-slide-1">READINESS &amp; DEVICE</button>
+              <button class="slide-pill" data-slide-btn="dash-slide-2">LIVE INTEL &amp; SIM</button>
             </div>
 
             <!-- Slide 1: Readiness & Device State -->
             <div id="dash-slide-1" class="sub-slide active">
               <div class="hero-compact">
-                <div class="eyebrow">AI PERFORMANCE INTELLIGENCE <span>iQOO 13</span></div>
+                <div class="eyebrow">YOUR DEVICE MODEL: <span>iQOO 13</span></div>
                 <h1>Your phone, <em>ahead</em> of the game.</h1>
                 <p class="lede">Predict session stability before launching demanding workloads.</p>
               </div>
@@ -168,8 +153,8 @@
           <section id="analyze" class="view">
             <!-- Slide Switcher Option -->
             <div class="slide-nav-bar">
-              <button class="slide-pill active" data-slide-btn="analyze-slide-1">1. POPULAR TITLES (6)</button>
-              <button class="slide-pill" data-slide-btn="analyze-slide-2">2. CUSTOM APK WORKLOAD</button>
+              <button class="slide-pill active" data-slide-btn="analyze-slide-1">POPULAR TITLES</button>
+              <button class="slide-pill" data-slide-btn="analyze-slide-2">CUSTOM APK WORKLOAD</button>
             </div>
 
             <!-- Slide 1: Popular Games Catalog -->
@@ -231,8 +216,8 @@
           <section id="results" class="view">
             <!-- Slide Switcher Option -->
             <div class="slide-nav-bar">
-              <button class="slide-pill active" data-slide-btn="res-slide-1">1. VERDICT &amp; ACTIONS</button>
-              <button class="slide-pill" data-slide-btn="res-slide-2">2. IMPACT MATRIX &amp; AI</button>
+              <button class="slide-pill active" data-slide-btn="res-slide-1">VERDICT &amp; ACTIONS</button>
+              <button class="slide-pill" data-slide-btn="res-slide-2">IMPACT MATRIX &amp; AI</button>
             </div>
 
             <!-- Slide 1: Performance Verdict & Optimization -->
@@ -303,59 +288,78 @@
 
           <!-- VIEW 4: LIVE GAME MODE SESSION -->
           <section id="session" class="view">
-            <div class="session-head">
-              <div>
-                <div class="eyebrow">GAME MODE <span class="live-dot">LIVE STREAM</span></div>
-                <h1 id="sessionGame">Genshin Impact</h1>
+            <!-- Idle / No Active Session State -->
+            <div id="sessionIdleState" class="session-idle-card">
+              <div class="idle-icon-wrap">
+                <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="var(--lime)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="2" y="6" width="20" height="12" rx="6"></rect>
+                  <path d="M6 12h4m-2-2v4"></path>
+                  <circle cx="15" cy="11" r="1" fill="var(--lime)"></circle>
+                  <circle cx="18" cy="13" r="1" fill="var(--lime)"></circle>
+                </svg>
               </div>
-              <button class="end-btn" id="endSession">END SESSION</button>
+              <div class="eyebrow">GAME MODE ENGINE <span>STANDBY</span></div>
+              <h2>No Session Ongoing</h2>
+              <p>Launch a game workload from Predict to monitor live rolling frame rates, thermal throttling, and hardware telemetry in real-time.</p>
+              <button class="primary" id="startNewSessionBtn">START A NEW SESSION <b>→</b></button>
             </div>
 
-            <div class="session-score">
-              <div>
-                <span id="liveFps">58</span>
-                <small>FPS</small>
+            <!-- Active Live Session Stream -->
+            <div id="sessionActiveState" style="display: none;">
+              <div class="session-head">
+                <div>
+                  <div class="eyebrow">GAME MODE <span class="live-dot">LIVE STREAM</span></div>
+                  <h1 id="sessionGame">Genshin Impact</h1>
+                </div>
+                <button class="end-btn" id="endSession">END SESSION</button>
               </div>
-              <div class="live-status">
-                <i></i> <span id="sessionStatusLabel">STABLE PERFORMANCE</span>
-                <p id="sessionStatusDesc">Frame rate is holding within target range.</p>
-              </div>
-            </div>
 
-            <div class="chart-card card">
-              <div class="card-label">FRAME RATE STREAM <span id="fpsAvgLabel">AVG 58 FPS · 1% LOW 51</span></div>
-              <svg id="liveSvgChart" viewBox="0 0 800 180" preserveAspectRatio="none" aria-label="fps chart">
-                <defs>
-                  <linearGradient id="area" x1="0" x2="0" y1="0" y2="1">
-                    <stop stop-color="#b8ff58" stop-opacity=".35"/>
-                    <stop offset="1" stop-color="#b8ff58" stop-opacity="0"/>
-                  </linearGradient>
-                </defs>
-                <path id="chartArea" d="M0 148 L55 133 L108 140 L160 117 L214 125 L265 88 L320 102 L372 73 L426 94 L480 62 L535 82 L585 70 L640 44 L695 60 L748 36 L800 48 L800 180 L0 180Z" fill="url(#area)"/>
-                <path id="chartLine" d="M0 148 L55 133 L108 140 L160 117 L214 125 L265 88 L320 102 L372 73 L426 94 L480 62 L535 82 L585 70 L640 44 L695 60 L748 36 L800 48" fill="none" stroke="#b8ff58" stroke-width="3"/>
-              </svg>
-              <div class="chart-axis">
-                <span>START</span>
-                <span>REAL-TIME STREAM</span>
+              <div class="session-score">
+                <div>
+                  <span id="liveFps">58</span>
+                  <small>FPS</small>
+                </div>
+                <div class="live-status">
+                  <i></i> <span id="sessionStatusLabel">STABLE PERFORMANCE</span>
+                  <p id="sessionStatusDesc">Frame rate is holding within target range.</p>
+                </div>
               </div>
-            </div>
 
-            <div class="live-metrics">
-              <article class="card">
-                <span>DEVICE TEMP</span>
-                <b id="liveTemp">40.1°</b>
-                <small id="liveTempDiff">+1.1°</small>
-              </article>
-              <article class="card">
-                <span>MEMORY LOAD</span>
-                <b id="liveMem">7.9 <small>GB</small></b>
-                <small id="liveMemPct">66%</small>
-              </article>
-              <article class="card">
-                <span>BATTERY</span>
-                <b id="sessionBattery">77%</b>
-                <small id="sessionDrain">−1%</small>
-              </article>
+              <div class="chart-card card">
+                <div class="card-label">FRAME RATE STREAM <span id="fpsAvgLabel">AVG 58 FPS · 1% LOW 51</span></div>
+                <svg id="liveSvgChart" viewBox="0 0 800 180" preserveAspectRatio="none" aria-label="fps chart">
+                  <defs>
+                    <linearGradient id="area" x1="0" x2="0" y1="0" y2="1">
+                      <stop stop-color="#b8ff58" stop-opacity=".35"/>
+                      <stop offset="1" stop-color="#b8ff58" stop-opacity="0"/>
+                    </linearGradient>
+                  </defs>
+                  <path id="chartArea" d="M0 148 L55 133 L108 140 L160 117 L214 125 L265 88 L320 102 L372 73 L426 94 L480 62 L535 82 L585 70 L640 44 L695 60 L748 36 L800 48 L800 180 L0 180Z" fill="url(#area)"/>
+                  <path id="chartLine" d="M0 148 L55 133 L108 140 L160 117 L214 125 L265 88 L320 102 L372 73 L426 94 L480 62 L535 82 L585 70 L640 44 L695 60 L748 36 L800 48" fill="none" stroke="#b8ff58" stroke-width="3"/>
+                </svg>
+                <div class="chart-axis">
+                  <span>START</span>
+                  <span>REAL-TIME STREAM</span>
+                </div>
+              </div>
+
+              <div class="live-metrics">
+                <article class="card">
+                  <span>DEVICE TEMP</span>
+                  <b id="liveTemp">40.1°</b>
+                  <small id="liveTempDiff">+1.1°</small>
+                </article>
+                <article class="card">
+                  <span>MEMORY LOAD</span>
+                  <b id="liveMem">7.9 <small>GB</small></b>
+                  <small id="liveMemPct">66%</small>
+                </article>
+                <article class="card">
+                  <span>BATTERY</span>
+                  <b id="sessionBattery">77%</b>
+                  <small id="sessionDrain">−1%</small>
+                </article>
+              </div>
             </div>
           </section>
 
@@ -363,8 +367,8 @@
           <section id="history" class="view">
             <!-- Slide Switcher Option -->
             <div class="slide-nav-bar">
-              <button class="slide-pill active" data-slide-btn="hist-slide-1">1. 30-DAY RETENTION</button>
-              <button class="slide-pill" data-slide-btn="hist-slide-2">2. PER-APP WEAR &amp; TIPS</button>
+              <button class="slide-pill active" data-slide-btn="hist-slide-1">30-DAY RETENTION</button>
+              <button class="slide-pill" data-slide-btn="hist-slide-2">PER-APP WEAR &amp; TIPS</button>
             </div>
 
             <!-- Slide 1: 30-Day Battery Health Trend -->
@@ -475,19 +479,42 @@
         <!-- Persistent Bottom Navigation Dock (iQOO OriginOS / Gaming Phone Dock) -->
         <nav class="phone-dock">
           <button class="dock-item active" data-nav="dashboard" title="Dashboard">
-            <span class="dock-icon">⊞</span>
+            <span class="dock-icon">
+              <svg class="dock-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="7" height="7" rx="1.5"></rect>
+                <rect x="14" y="3" width="7" height="7" rx="1.5"></rect>
+                <rect x="14" y="14" width="7" height="7" rx="1.5"></rect>
+                <rect x="3" y="14" width="7" height="7" rx="1.5"></rect>
+              </svg>
+            </span>
             <span class="dock-label">OVERVIEW</span>
           </button>
           <button class="dock-item" data-nav="analyze" title="Predictor">
-            <span class="dock-icon">✨</span>
+            <span class="dock-icon">
+              <svg class="dock-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"></path>
+              </svg>
+            </span>
             <span class="dock-label">PREDICT</span>
           </button>
           <button class="dock-item" data-nav="session" title="Game Mode">
-            <span class="dock-icon">🕹️</span>
+            <span class="dock-icon">
+              <svg class="dock-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="6" width="20" height="12" rx="6"></rect>
+                <path d="M6 12h4m-2-2v4"></path>
+                <line x1="15" y1="11" x2="15.01" y2="11" stroke-width="3"></line>
+                <line x1="18" y1="13" x2="18.01" y2="13" stroke-width="3"></line>
+              </svg>
+            </span>
             <span class="dock-label">SESSION</span>
           </button>
           <button class="dock-item" data-nav="history" title="Degradation">
-            <span class="dock-icon">📊</span>
+            <span class="dock-icon">
+              <svg class="dock-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 3v18h18"></path>
+                <path d="m19 9-5 5-4-4-3 3"></path>
+              </svg>
+            </span>
             <span class="dock-label">WEAR</span>
           </button>
         </nav>
@@ -540,8 +567,6 @@
           </div>
         </div>
 
-        <!-- Phone Gesture Home Indicator Pill -->
-        <div class="phone-home-indicator"></div>
       </div>
     </div>
 
