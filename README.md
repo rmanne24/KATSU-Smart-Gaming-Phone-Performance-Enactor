@@ -38,33 +38,58 @@ What if your phone could predict the problem before it happened and tell you wha
 
 ## Key Features
 
-* **Game Readiness & Predictive Engine**: Calculates a composite 0–100 Readiness Score and predicts an expected FPS range (e.g., 48–60 FPS) tailored to the Snapdragon 8 Elite platform.
-* **Curated Catalog & Custom APK Analyzer**: Includes pre-calibrated benchmarks for popular AAA titles alongside a custom benchmark tool to evaluate unlisted games and APKs by RAM and GPU intensity.
-* **Explainable AI Layer ("Why This Result?")**: Uses model feature importance to show exactly how GPU capability, thermal resistance, and RAM margins influenced the prediction.
-* **Live In-Session Telemetry Stream**: Rolling SVG frame rate graph, 1% low pacing calculations, and session duration tracking.
-* **30-Day Battery Wear & Degradation Tracker**: Visualizes battery health retention curves, per-title wear percentages, and actionable tips (e.g., bypass charging benefits).
-* **Interactive Telemetry Simulator**: Built-in simulation tool with instant presets (*Cool 32°C*, *Nominal 39°C*, *Throttle 43.5°C*) and granular temperature sliders for testing hardware states.
-* **Audio AI Briefing**: Native Web Speech API integration providing spoken performance advisories.
-* **Dynamic Connection Awareness**: Real-time status indicator displaying `ACTIVE` when connected to the trained machine learning backend, with seamless fallback to on-device heuristics when offline.
+### 1. Game Readiness Score
+Analyzes **temperature, RAM, battery and hardware state** to generate a **0 to 100 readiness score** and predicted FPS range before gameplay.
+
+### 2. One Tap Optimization
+Identifies resource intensive background processes and provides **instant optimization** to create additional performance headroom.
+
+### 3. Explainable AI
+Shows **why the prediction was made**, highlighting the impact of temperature, RAM, GPU capability and other hardware factors.
+
+### 4. Live Performance Monitoring
+Tracks **FPS, 1% lows, temperature and session duration** in real time to detect performance degradation.
+
+### 5. Thermal Risk Prediction
+Identifies when the device is approaching a **thermal throttling zone**, helping prevent sudden FPS drops and stuttering.
+
+### 6. Battery Wear Intelligence
+Tracks gaming patterns over time and estimates **battery stress and health retention**, including per game impact.
+
+### 7. Universal Game Analyzer
+Provides pre calibrated profiles for popular games and allows users to **analyze unlisted games** based on workload intensity.
+
+### 8. AI Performance Briefing
+Converts important performance insights into **simple spoken recommendations** for hands free monitoring.
+
+### 9. Dual Mode Intelligence
+Uses **ML powered predictions when connected** and calibrated on device heuristics when the backend is unavailable.
+
+### 10. Platform Ready Architecture
+Initially optimized for the **iQOO 13 with Snapdragon® 8 Elite**, with an architecture designed for future multi device and multi SoC support.
+
+## Core Differentiator
+
+**Traditional tools show what is happening. KATSU predicts what is about to happen and recommends what to do.**
 
 ---
 
 ## Tech Stack
 
-### Frontend Application
-* **HTML5 & CSS3**: Custom design system featuring dark glassmorphism, responsive grid/flexbox layouts, Space Grotesk typography, and DM Mono data displays.
-* **Vanilla JavaScript (ES6+)**: Zero-dependency, lightweight client architecture managing navigation, real-time charting, and API communication.
-* **SVG Visualizations**: Dynamic SVG path rendering for rolling frame-rate streams and 30-day battery retention curves.
-* **Web Speech API**: Integrated voice synthesis for hands-free audio briefings.
-
-### Machine Learning & Backend
-* **Python 3.10+**: Core backend runtime.
-* **FastAPI**: High-performance asynchronous REST API serving inference endpoints (`/predict`, `/health`, `/games`).
-* **scikit-learn**:
-  * `GradientBoostingRegressor`: Predicts continuous performance scores ($R^2 = 0.963$) and frame rates ($R^2 = 0.993$).
-  * `RandomForestClassifier`: Multi-class classification for thermal throttle risk and battery impact.
-* **Joblib & NumPy**: Model serialization and matrix operations.
-* **Node.js**: Lightweight static web server (`serve.js`).
+| Category | Technology | Purpose |
+|---|---|---|
+| **Frontend** | **HTML5 & CSS3** | Responsive UI and KATSU design system |
+| | **Vanilla JavaScript (ES6+)** | Application logic, API communication and real-time updates |
+| | **SVG** | Live FPS and battery health visualizations |
+| | **Web Speech API** | Voice-based performance alerts |
+| **Backend** | **Python 3.10+** | Core backend and ML runtime |
+| | **FastAPI** | REST API for predictions, health checks and game profiles |
+| **Machine Learning** | **scikit-learn** | Model training and performance prediction |
+| | **Gradient Boosting Regressor** | Predicts performance score and expected FPS |
+| | **Random Forest Classifier** | Predicts thermal throttling and battery impact |
+| **Data & Models** | **NumPy** | Numerical computations and data processing |
+| | **Joblib** | ML model serialization and deployment |
+| **Server** | **Node.js** | Lightweight frontend server |
 
 ---
 
@@ -72,24 +97,24 @@ What if your phone could predict the problem before it happened and tell you wha
 
 ```mermaid
 flowchart TD
-    A[Device Telemetry] -->|Temperature, RAM, Battery| C[Inference Engine]
-    B[Game Workload Profile] -->|GPU / CPU Intensity, RAM Need| C
-    
-    subgraph Engine [Dual-Mode Intelligence Layer]
-        C --> D{FastAPI Online?}
-        D -->|Yes| E[scikit-learn GradientBoosting Model]
-        D -->|No| F[On-Device Calibrated Heuristics]
+    A["Device Telemetry"] -->|"Temperature, RAM, Battery"| C["Inference Engine"]
+    B["Game Workload Profile"] -->|"GPU / CPU Intensity, RAM Need"| C
+
+    subgraph Engine["Dual-Mode Intelligence Layer"]
+        C --> D{"FastAPI Online?"}
+        D -->|"Yes"| E["Gradient Boosting<br/>ML Model"]
+        D -->|"No"| F["On-Device<br/>Calibrated Heuristics"]
     end
 
-    E --> G[Prediction & Readiness Score]
+    E --> G["Prediction &<br/>Readiness Score"]
     F --> G
 
-    G --> H[Pre-Launch Verdict & FPS Range]
-    G --> I[Explainable AI Attribution]
-    G --> J[1-Tap Optimization]
+    G --> H["Pre-Launch Verdict<br/>& FPS Range"]
+    G --> I["Explainable AI<br/>Attribution"]
+    G --> J["1-Tap<br/>Optimization"]
 
-    J --> K[Live Game Mode Session]
-    K --> L[Post-Usage 30-Day Wear & Battery Retention]
+    J --> K["Live Game<br/>Mode Session"]
+    K --> L["30-Day Battery Wear<br/>& Health Retention"]
 ```
 
 1. **Telemetry Ingestion**: Gathers battery level, memory utilization, storage headspace, and surface temperature.
@@ -102,11 +127,18 @@ flowchart TD
 
 ## Future Implementations
 
-* **Direct Android ADB / Kernel Daemon Bridge**: Integration with low-level Android hardware interfaces (`sysfs`, `/sys/class/thermal/`, `dumpsys batterystats`) for automated background polling on physical hardware.
-* **Dynamic In-Game Resolution & Refresh Rate Scaling**: Automated adjustments to display refresh rates (144Hz / 120Hz / 60Hz) and resolution downsampling when thermal throttling thresholds are approached.
-* **Automated Bypass Charging Triggers**: Automatic system signals to engage battery bypass charging when high thermal load is detected during plugged-in play.
-* **Crowdsourced Workload Benchmark Registry**: Cloud-synchronized profiles of community-tested game settings across varying ambient temperatures.
-* **Multi-SoC Platform Profiles**: Expansion beyond the Snapdragon 8 Elite to support MediaTek Dimensity and Apple silicon architectures.
+* **On-Device AI Explanation Layer**: Integrate a lightweight local LLM to analyze device telemetry and game workload data, generating personalized explanations and recommendations in simple language.
+
+* **Direct Android Hardware Integration**: Connect KATSU to Android thermal, battery and system interfaces for continuous real-device telemetry without relying on simulated inputs.
+
+* **Adaptive In-Game Optimization**: Automatically adjust resolution, refresh rate and performance settings when thermal or performance risks are detected.
+
+* **Intelligent Bypass Charging**: Automatically trigger battery bypass charging during high-load gaming sessions to reduce unnecessary battery stress.
+
+* **Personalized & Interactive Device Learning**: Continuously learn from each phone's usage history, age, thermal behavior and gaming patterns to make predictions increasingly specific to that device.
+
+* **Beyond Gaming**: Expand the same predictive intelligence framework to demanding workloads such as video editing, AI applications and other performance-intensive tasks.
+
 
 ---
 
