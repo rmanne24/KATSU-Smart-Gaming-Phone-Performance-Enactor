@@ -146,7 +146,7 @@ flowchart TD
 
 ### YouTube Demo Video
 <!-- Paste your YouTube video link below -->
-[Watch the Demo Video](https://www.youtube.com/)
+[Watch the Demo Video](https://youtu.be/31Z7zNsNFo8)
 
 ### Presentation / Pitch Deck (Google Drive)
 <!-- Paste your Google Drive pitch deck link below -->
