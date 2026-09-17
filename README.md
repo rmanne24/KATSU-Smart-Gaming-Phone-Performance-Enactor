@@ -150,7 +150,7 @@ flowchart TD
 
 ### Presentation / Pitch Deck (Google Drive)
 <!-- Paste your Google Drive pitch deck link below -->
-[View Pitch Deck on Google Drive](https://drive.google.com/](https://docs.google.com/presentation/d/1Hy6sERZYFQMCvF2vo-pUJIvDgPZdf4b0xmkb_DPB2l8/edit?usp=sharing))
+[View Pitch Deck on Google Drive](https://docs.google.com/presentation/d/1Hy6sERZYFQMCvF2vo-pUJIvDgPZdf4b0xmkb_DPB2l8/edit?usp=sharing)
 
 ---
 
