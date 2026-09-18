@@ -34,3 +34,10 @@ wheels/
 Thumbs.db
 Desktop.ini
 .DS_Store
+
+# Android Build
+android/build/
+*.keystore
+*.idsig
+
+

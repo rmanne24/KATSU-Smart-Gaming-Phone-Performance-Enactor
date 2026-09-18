@@ -175,6 +175,17 @@ node serve.js
 Open your browser and navigate to:
 👉 **`http://localhost:3000`**
 
+### 3. Install & Run on Android (APK)
+KATSU is packaged as an installable, standalone Android application:
+- **Ready-to-Install APK**: [KATSU-v1.0.apk](file:///c:/Users/lspal/Downloads/mock-performance-teller/KATSU-v1.0.apk) (located directly in the project root).
+- **Rebuild APK**: Run `.\build-apk.ps1` (or double-click `build-apk.bat`).
+- **Install on Device via ADB**:
+  ```bash
+  adb install -r KATSU-v1.0.apk
+  ```
+- **Install manually**: Transfer `KATSU-v1.0.apk` to your phone via USB, WhatsApp, or Google Drive, tap the file, and choose **Install**.
+
+
 ---
 
 ## **PROTOTYPE IMAGES**
